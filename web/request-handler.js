@@ -4,12 +4,23 @@ var helpers = require('./http-helpers.js')
 
 // require more modules/folders here!
 
+var sendData = function(code, headers, data, res) {
+  res.writeHead(code, headers);
+  res.write(data);
+}
+
+var actions = {
+  'GET': function(req, res) {
+    helpers.serveAssets(res, './web/public/index.html', sendData);
+  }
+}
 exports.handleRequest = function (req, res) {
-  if (req.method === 'GET') {
-    if (req.url === '/') {
-      //'/Users/HR10/2015-05-web-historian/web/public/index.html' is absolute dir
-      helpers.serveAssets(res, './web/public/index.html');
+  var action = actions[req.method];
+  if (action) {
+    if (req.url === '/' || req.url === '/styles.css') {
+      action(req, res);
+
     }
   }
-  // res.end(archive.paths.list);
+   // res.end(archive.paths.list);
 };
