@@ -6,10 +6,10 @@ var helpers = require('./http-helpers.js')
 
 exports.handleRequest = function (req, res) {
   if (req.method === 'GET') {
-    helpers.serveAssets(res, '/Users/HR10/2015-05-web-historian/web/public/index.html')
-    // if (req.url === '/') {
-      // res.writeHead(200, headers);
-    // }
+    if (req.url === '/') {
+      //'/Users/HR10/2015-05-web-historian/web/public/index.html' is absolute dir
+      helpers.serveAssets(res, './web/public/index.html');
+    }
   }
   // res.end(archive.paths.list);
 };
