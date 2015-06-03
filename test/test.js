@@ -1,8 +1,8 @@
 var expect = require('chai').expect;
-var handler = require("../web/request-handler");
-var stubs = require("./stubs/stubs");
+var handler = require("../web/request-handler.js");
+var stubs = require("./stubs/stubs.js");
 var fs = require('fs');
-var archive = require("../helpers/archive-helpers");
+var archive = require("../helpers/archive-helpers.js");
 var path = require('path');
 var res;
 
@@ -25,12 +25,13 @@ describe("Node Server Request Listener Function", function() {
 
   it("Should answer GET requests for /", function(done) {
     var req = new stubs.Request("/", "GET");
-
+    console.log('request======', req)
     handler.handleRequest(req, res);
 
     waitForThen(
       function() { return res._ended; },
       function(){
+        console.log('response=====', res)
         expect(res._responseCode).to.equal(200);
         expect(res._data.toString().match(/<input/)).to.be.ok; // the resulting html should have an input tag
         done();
