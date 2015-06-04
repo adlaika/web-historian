@@ -48,6 +48,9 @@ var actions = {
           helpers.serveAssets(res, asset, sendData);
         } else {
           //serve loading.html and write to sites.txt
+          asset = archive.paths.siteAssets + '/loading.html';
+          helpers.serveAssets(res, asset, sendData);
+          archive.addUrlToList(post);
         }
       });
       // sendData(201, helpers.headers, res);
