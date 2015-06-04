@@ -11,16 +11,14 @@ var sendData = function(code, headers, data, res) {
 
 var actions = {
   'GET': function(req, res) {
-    helpers.serveAssets(res, './web/public/index.html', sendData);
+    helpers.serveAssets(res, archive.paths.siteAssets + '/index.html', sendData);
   }
 }
 exports.handleRequest = function (req, res) {
+  console.log(req)
   var action = actions[req.method];
   if (action) {
-    if (req.url === '/' || req.url === '/styles.css') {
-      action(req, res);
-
-    }
+    action(req, res);
   }
    // res.end(archive.paths.list);
 };
