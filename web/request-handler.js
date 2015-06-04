@@ -15,7 +15,6 @@ var actions = {
   }
 }
 exports.handleRequest = function (req, res) {
-  console.log(req)
   var action = actions[req.method];
   if (action) {
     action(req, res);

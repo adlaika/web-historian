@@ -16,6 +16,8 @@ var ip = "127.0.0.1";
 var server = http.createServer(function(req, res) {
   console.log("Listening on http://" + ip + ":" + port);
   var parts = urlParser.parse(req.url);
+  // console.log("-------PARTS.PATHNAME--------: " + parts.pathname);
+  var filePath = parts.pathname;
   var route = routes[parts.pathname];
   if ( route ){
     route(req, res);
