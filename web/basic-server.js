@@ -2,6 +2,7 @@ var http = require("http");
 var handler = require("./request-handler.js");
 var initialize = require("./initialize.js");
 var urlParser = require("url");
+var archive = require("../helpers/archive-helpers.js");
 // Why do you think we have this here?
 // HINT:It has to do with what's in .gitignore
 initialize();
@@ -18,7 +19,14 @@ var server = http.createServer(function(req, res) {
   var parts = urlParser.parse(req.url);
   // console.log("-------PARTS.PATHNAME--------: " + parts.pathname);
   var filePath = parts.pathname;
-  var route = routes[parts.pathname];
+
+  archive.callbackIfURLArchived('/www.google.com', function(fileExists) {
+    if(fileExists) {
+      console.log('file exists----------------------')
+    }
+  });
+
+  var route = routes[filePath];
   if ( route ){
     route(req, res);
   } else {
