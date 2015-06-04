@@ -1,6 +1,7 @@
 var fs = require('fs');
 var path = require('path');
 var _ = require('underscore');
+var http = require("http-request");
 
 /*
  * You will need to reuse the same paths many times over in the course of this sprint.
@@ -27,6 +28,10 @@ exports.initialize = function(pathsObj){
 
 exports.readListOfUrls = function(){
   fs.readFile(paths.list, 'utf8', function(err, data) {
+    if (err) {
+      console.error(err);
+      return;
+    }
     var urls = data.split(';');
     exports.downloadUrls(urls);
   });
@@ -51,5 +56,29 @@ exports.callbackIfURLArchived = function(asset, callback){
 };
 
 exports.downloadUrls = function(array){
-
+  array.forEach(function (url) {
+    http.get(url, function (err, res) {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      var html = res.buffer.toString();
+      fs.writeFile(paths.archivedSites + '/' + url, html, function(err) {
+        if (err){
+          console.error(err);
+          return;
+        }
+        console.log('file written!')
+      });
+      // console.log(res.code, res.headers, res.buffer.toString());
+    });
+  });
+  //clear 'sites.txt' after pulling sites
+  fs.writeFile(paths.list, '', function(err, data) {
+    if (err) {
+      console.error(err);
+      return;
+    }
+    console.log('sites wiped!')
+  })
 };
