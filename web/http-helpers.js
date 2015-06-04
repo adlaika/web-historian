@@ -11,7 +11,7 @@ exports.headers = headers = {
 };
 
 exports.serveAssets = function(res, asset, callback) {
-
+  console.log('assset',asset)
   var readStream = fs.createReadStream(asset);
   readStream.on('data', function(data) {
     var code = 200;

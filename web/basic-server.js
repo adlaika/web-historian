@@ -8,8 +8,16 @@ var archive = require("../helpers/archive-helpers.js");
 initialize();
 
 var routes = {
-  '/': handler.handleRequest,
-  '/styles.css': handler.handleRequest
+  '/': function(req, res) {
+    var url = archive.paths.siteAssets+'/index.html';
+    console.log('url', url)
+    handler.handleRequest(req, res, url)
+  },
+  '/styles.css': function(req, res) {
+    var url = archive.paths.siteAssets+'/index.html';
+    console.log('url', url)
+    handler.handleRequest(req, res, url)
+  }
 };
 
 var port = 8080;
@@ -20,9 +28,10 @@ var server = http.createServer(function(req, res) {
   // console.log("-------PARTS.PATHNAME--------: " + parts.pathname);
   var filePath = parts.pathname;
 
-  archive.callbackIfURLArchived('/www.google.com', function(fileExists) {
+  archive.callbackIfURLArchived(filePath, function(fileExists) {
     if(fileExists) {
-      console.log('file exists----------------------')
+      var url = archive.paths.archivedSites+filePath;
+      handler.handleRequest(req, res, url)
     }
   });
 

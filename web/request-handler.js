@@ -10,14 +10,16 @@ var sendData = function(code, headers, data, res) {
 }
 
 var actions = {
-  'GET': function(req, res) {
-    helpers.serveAssets(res, archive.paths.siteAssets + '/index.html', sendData);
+  'GET': function(req, res, url) {
+    helpers.serveAssets(res, url, sendData);
   }
 }
-exports.handleRequest = function (req, res) {
+exports.handleRequest = function (req, res, url) {
+  console.log('inhandlerequest', url);
+  // url = url || undefined;
   var action = actions[req.method];
   if (action) {
-    action(req, res);
+    action(req, res, url);
   }
    // res.end(archive.paths.list);
 };
