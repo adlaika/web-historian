@@ -15,11 +15,12 @@ exports.serveAssets = function(res, asset, callback) {
   var readStream = fs.createReadStream(asset);
   readStream.on('data', function(data) {
     var code = 200;
-    callback(code, headers, data, res);
+    callback(code, headers, res, data);
   })
 
   readStream.on('close', function(data) {
-    res.end()
+    console.log('streamclosed----------')
+    //possible premature response end
   });
 
 };

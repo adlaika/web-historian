@@ -34,8 +34,8 @@ exports.isUrlInList = function(url){
 exports.addUrlToList = function(url){
 };
 
-exports.callbackIfURLArchived = function(url, callback){
-  fs.exists(paths.archivedSites + url, callback);
+exports.callbackIfURLArchived = function(asset, callback){
+  fs.exists(asset, callback);
 };
 
 exports.downloadUrls = function(){
