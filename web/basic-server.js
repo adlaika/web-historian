@@ -28,17 +28,16 @@ var server = http.createServer(function(req, res) {
   // console.log("-------PARTS.PATHNAME--------: " + parts.pathname);
   var filePath = parts.pathname;
 
-  archive.callbackIfURLArchived(filePath, function(fileExists) {
-    if(fileExists) {
-      var url = archive.paths.archivedSites+filePath;
-      handler.handleRequest(req, res, url)
-    }
-  });
-
   var route = routes[filePath];
   if ( route ){
     route(req, res);
   } else {
+    archive.callbackIfURLArchived(filePath, function(fileExists) {
+      if(fileExists) {
+        var url = archive.paths.archivedSites+filePath;
+        handler.handleRequest(req, res, url)
+      }
+    });
     //404 not found
   }
 });

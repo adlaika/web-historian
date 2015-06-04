@@ -15,8 +15,6 @@ var actions = {
   }
 }
 exports.handleRequest = function (req, res, url) {
-  console.log('inhandlerequest', url);
-  // url = url || undefined;
   var action = actions[req.method];
   if (action) {
     action(req, res, url);
