@@ -1,0 +1,1 @@
+*/1 * * * * /Users/HR10/.nvm/v0.10.25/bin/node /Users/HR10/2015-05-web-historian/workers/htmlfetcher.js -update -config=myconfig

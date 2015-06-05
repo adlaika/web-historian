@@ -2,6 +2,7 @@ var path = require('path');
 var archive = require('../helpers/archive-helpers.js');
 var helpers = require('./http-helpers.js')
 var qs = require('querystring');
+var Q = require('q');
 
 // require more modules/folders here!
 
@@ -18,6 +19,11 @@ var actions = {
 
       asset = archive.paths.siteAssets + '/index.html';
       helpers.serveAssets(res, asset, sendData);
+      Q.helpers.serveAssets(res, asset)
+      .then(sendData)
+
+
+
     } else {
       asset = archive.paths.archivedSites + req.url;
       archive.callbackIfURLArchived(asset, function(fileExists) {
